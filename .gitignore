@@ -1,3 +1,5 @@
 db/keguang
 keguang
 tensorflow/MNIST_data
+*.pyc
+**/__pycache__
