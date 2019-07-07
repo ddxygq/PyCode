@@ -1,5 +1,6 @@
 db/keguang
-keguang
+db/mysql/*.pyc
+db/mysql/__pycache__
+
 tensorflow/MNIST_data
-*.pyc
-**/__pycache__
+tensorflow/__pycache__
