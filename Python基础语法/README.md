@@ -1,1 +1,1257 @@
 # Python基础语法
+
+# 介绍
+Python 是一门独特的语言，快速浏览一下他的要点：
+- 面向对象：每一个变量都是一个类，有其自己的属性（attribute）与方法（method）。
+- 语法块：用缩进（四个空格）而不是分号、花括号等符号来标记。因此，行首的空格不能随意书写。
+- 注释：行内用“#”号，行间注释写在两组连续三单引号之间：’’’
+- 续行：行尾输入一个反斜杠加一个空格（’\ ‘），再换行。如果行尾语法明显未完成（比如以逗号结尾），可以直接续行。
+- 打印与输入： 函数 print() 与 input()，注意 print() 的 sep 与 end 参数。
+- 变量：无需指定变量类型，也不需要提前声明变量。
+  - 删除变量：del()
+  - 复制变量：直接将变量a赋值给b，有时仅仅复制了一个“引用”。此后 b 与 a 的改动仍会互相影响。必要时使用 a is b 来判断是否同址。
+- 模块：通过 import pandas 的方式加载模块（或者 import pandas as pd），并用形如 pandas.DataFrame（或 pd.DataFrame）的方式调用模块内的方法。也可以使用 from pandas import DataFrame 的方式，这样在下文可以直接使用 DataFrame 作为调用名。
+- 帮助：配合使用 dir() 与 help() 命令；其中前者是输出变量所有的成员。以及查阅 官网页面。
+
+变量复制的一个例子。
+```python
+a = [1, 2]
+b = a
+print(id(a) - id(b))  # 地址差为 0，表示实质是同址的
+0
+```
+```python
+b.append(3)
+print(a)  # 只改动了 b，但 a 也跟着变动了
+[1, 2, 3]
+a is b
+True
+```
+使用切片来重新分配空间：
+```python
+a is a[:]
+False
+```
+
+# 数据结构
+Python 原生的数据结构包括：
+
+## 数字（num）
+细分为整数（int）与浮点数（float）两种。
+- 四则运算：+， -， *， / ，乘方： **
+- 整除： 5 // 2 = 2，取余：5 % 2 = 1
+- 自运算： a += 1 （四则与乘方均可类似自运算）
+以及一些细节：
+- 运算两数中只要有一个浮点数，结果就是浮点数；
+- 整数相除，即使能除尽，结果也是浮点数；
+- Python 内部的机制解决了整数溢出的问题，不用担心。
+
+## 布尔（bool）与逻辑
+首字母大写 True / False.
+- 逻辑运算符：与 A and B，或 A or B，非 not A
+- 逻辑关系符：等于 ==， 不等于 !=. 其他不赘述。
+- 几种逻辑判断例子：
+
+| 变量 x | x = [] | x = 0 | x = 2 |
+| :---: | :---: | :---: | :---: |
+|bool(x)|False|False|True|
+|if x: …	|False	|False	|True|
+|if x is None: …	|False|	False	|False|
+
+## 序列（sequence）
+序列主要包括**字符串（str）、列表（list）与元祖（tuple）**三类。
+- 序列索引规则：
+  - 索引从0开始，到 N-1 结束。
+  - 切片：切片的索引是左闭右开的。
+    - seq[0:2]（从 0 到 1）
+    - seq[2:]（从 2 到尾）
+    - seq[:3] （从头到 2）
+    - seq[:]（全部）
+    - seq[:10:2]（从头到9，每两个取一个）
+    - seq[::2]（全部，每两个取一个）
+  - 索引允许负数：seq(-1) 与 seq(N - 1) 等同，seq(-3:-1)与 seq(N-3:N-1) 等同。
+- 序列通用函数：
+  - len()：返回序列长度。
+  - +/* ：加号用于连接两个序列，乘号重复排列若干次再连接。
+  - seq1 in seq2：如果 seq1 这个片段可以在 seq2 中被找到，返回 True.
+  - index：在 seq1 in seq2 为 True 时使用，seq2.index(seq1) 表示 seq1 首次出现于 seq2 中的位置。
+  - max()/min()：返回序列中的最值。如果不是数字，则按 ASCII 码顺序返回。
+  - cmp(seq1, seq2)：比较大小。结果为负，则表示 seq1 较小。
+
+### 字符串（str）
+写于一对双引号或单引号内。用 str() 可以强制转换为字符串。
+
+- 转义：反斜杠。如果强制不解释字符串，在左引号前加字母 r 即可： `r"c:\new"`.
+- 分割与连接：`**.split()` 与 `**.join()`.
+```python
+s = " I love Python"  # 首位是空格
+lst = s.split(' ')
+lst1 = '-'.join(lst)
+
+print(lst, '\n', lst1)
+['', 'I', 'love', 'Python'] 
+ -I-love-Python
+```
+- 紧切：`strip()` 去掉字符串首尾两端的空格。方法 `lstrip()/rstrip()` 则只切除首端/尾端的空格。
+```python
+s.strip()
+'I love Python'
+```
+- 大小写转换：如下几个方法：
+  - 首字母大写：s.title()
+  - 全大写：s.upper()
+  - 全小写：s.lower()
+  - 句首大写：s.capitalize()
+- 格式化：字符串格式化是一种实用功能。通过 .format() 成员函数完成。
+```python
+'I like {} and {}'.format('Python', 'you')
+'I like Python and you'
+'{0} + {2} = {1}'.format (10, 20, 'Python ')  # 按顺序引用
+'10 + Python  = 20'
+'{0} * {1} = {0}'.format (10, 'Python ')  # 编号反复引用
+'10 * Python  = 10'
+```
+格式化控制码：
+
+|控制码|含义|控制码|含义|
+|:---:|:---:|:---:|:---:|
+|:s|字符串|:c|单个字符|
+|:b/o/x/d	|二、八、十六、十进制数	|:e/f	|科学计数法/浮点数|
+一些复杂控制的例子：
+
+|例子|含义|例子|含义|
+|:---:|:---:|:---:|:---:|
+|:.2f/:+.2f	|两位小数/带符号两位小数	|: .2f	|正数前补空格的两位小数|
+|:,	|逗号分隔符|	:.2%	|百分比两位小数|
+|:.2e	|科学计数法两位小数|	:^4d|总宽四位居中对齐|
+|:>4d/<4d|总宽四位左/右对齐	|:0>4d|总宽四位左侧补零|
+举例：
+
+```python
+"{:0>7.2f} is an odd number".format(123.4)  # 总宽 7 位小数点后 2 位，左侧补零
+'0123.40 is an odd number'
+```
+其他实用的字符串函数：
+
+- str.replace(old, new[, times])：将字符串中前 times 个 old 子串替换为 new。Times 不指定时默认替换全部。
+- str.isdigit()：判断字符串是否每一位都是数字，返回 True 或者 False。
+字符串中正则表达式的内容参见本文附录。
+
+### 列表（list）
+中括号式的结构。`list()` 用于强制转换类型。
+```python
+lst = [1, 2, 3]
+print(lst)
+[1, 2, 3]
+# 【反转】：其中第二种方式会更改现有的列表
+lst1 = list(reversed(lst))
+lst.reverse()
+print(lst1, lst)
+[3, 2, 1] [3, 2, 1]
+# 【追加】：元素 append()，另一个列表：extend()
+lst.append(4)
+print(lst)
+[3, 2, 1, 4]
+lst.extend(lst1)
+print(lst)
+[3, 2, 1, 4, 3, 2, 1]
+# 【插入】：lst.insert(idx, obj) 会在 lst[idx] 处插入 obj，然后依次后移原有项
+lst.insert(1, 100)
+print(lst)
+[3, 100, 2, 1, 4, 3, 2, 1]
+# 【删除】：lst.remove(obj) 会删除首个匹配值，若无匹配会报错；
+#           lst.pop(idx) 会返回 lst[idx]，并将其删除。如果不指定 idx，默认为列表尾
+lst.remove(2)
+print(lst)
+[3, 100, 1, 4, 3, 2, 1]
+tmp = lst.pop()
+print(lst, "\n", tmp)
+[3, 100, 1, 4, 3, 2] 
+ 1
+# 【搜索】：使用序列通用函数即可。用 count(obj) 可以计算频数。
+# 【排序】：sort() 方法。如果指定 reverse 参数，可降序排序。
+lst.sort(reverse=True)
+print(lst)
+[100, 4, 3, 3, 2, 1]
+# 【清空】：clear()
+lst.clear()
+print(lst)
+[]
+```
+### 元组（tuple）
+圆括号式的结构，是一种不可变序列。
+```python
+a = (1, 'string ', [1 ,2])
+print(a)
+(1, 'string ', [1, 2])
+```
+**Note**: 定义一个空的元组用`()`，定义只有一个元组的元组，需要加`,`，否则就不是元组了，如下：
+```python
+>>> tuple1 = ()
+>>> type(tuple1)
+<type 'tuple'>
+>>> tuple2 = (1)
+>>> type(tuple2)
+<type 'int'>
+>>> tuple3 = (1,)
+>>> type(tuple3)
+<type 'tuple'>
+```
+## 字典（dict）
+字典是一种类哈希表的数据结构，内部无序，通过键值对（key: value）的形式存储数据。几种字典初始化的方式：
+```python
+# 小字典直接赋值
+d1 = {"name": "wklchris", "gender": "male"}
+# 利用字典增加键值对的方法
+d2 = {}
+d2['name'] = 'wklchris'
+# 一个值赋给多个键
+d3 = {}.fromkeys(("name", "gender"), "NA")
+# 强制格式转换
+d4 = dict(name="wklchris", gender="male")
+
+print(d1, d2, d3, d4, sep="\n")
+{'name': 'wklchris', 'gender': 'male'}
+{'name': 'wklchris'}
+{'name': 'NA', 'gender': 'NA'}
+{'name': 'wklchris', 'gender': 'male'}
+```
+字典的操作方法：
+```python
+len(d1)
+2
+# 【复制】：
+dd = d1.copy()
+dd is d1
+False
+# 【查找键名称】：
+"name" in dd
+True
+# 【删除键值对】
+del(dd["name"])
+# 【get】
+dd.get("name", "Nothing")  # 如果键不存在，返回“Nothing”
+'Nothing'
+# 【setdefault】
+dd.setdefault("name", "wklchris")  # 如果键不存在，就新建该键，并赋值
+'wklchris'
+print(dd)
+{'name': 'wklchris', 'gender': 'male'}
+# 【输出键值】：
+list(dd.items())
+[('name', 'wklchris'), ('gender', 'male')]
+list(dd.keys())
+['name', 'gender']
+list(dd.values())
+['wklchris', 'male']
+# 【弹出键值对】：pop(key) / popitem(key)
+# 其中，后者会随机弹出一个键值对
+tmp = dd.pop("gender")
+print(dd, tmp)
+{'name': 'wklchris'} male
+# 【更新】：update(ref_dict) 以 ref_dict 为准，更新当前字典
+d4 = {"name": "Test", "Age": 3}
+dd.update(d4)
+print(dd)
+{'name': 'Test', 'Age': 3}
+```
+## 集合（set）
+本文只讨论可变集合，关于不可变集合的内容，参考 help(frozenset)。
+
+集合是一种无序的数据存储方式，且内部元素具有唯一性。集合与字典一样都可以用花括号的形式创立。但在书写 a={} 时，Python 会将其识别为字典类型。
+- 增添：add() / update()
+- 删除：remove() / discard()，区别在于后者搜索无结果会报错。
+- 从属：a.issubset(b) 集合 a 是否是 b 的子集；a.issuperset(b) 集合 a 是否是 b 的父集。a == b 两集合是否全等。
+- 集合运算：集合运算不会改变参与运算的集合本身。
+  - 并集： a | b 或者 a.union(b)
+  - 交集： a & b 或者 a.intersection(b)
+  - 补集： a - b 或者 a.difference(b)
+**注意**：在字符串强制转换为集合时，必要时使用中括号先转为列表（否则字符串会被拆分为单个字符后再进行转换）。例如：
+```python
+ss = {"a", "b", "c"}
+ss | set("de")
+{'a', 'b', 'c', 'd', 'e'}
+ss | set(["de"])
+{'a', 'b', 'c', 'de'}
+```
+
+# 基本语句
+同大多数程序语言一样，Python 拥有 `if, for, while`语句。什么？`switch` 语句？使用字典就好。
+
+## if 语句与三元操作
+在 Python 中，`else if` 被缩写为单个关键词 `elif`.
+```python
+if 1.0 > 1:
+    a = 1
+elif 1.0 < 1:
+    a = 2
+else:
+    a = 3
+    
+a
+3
+```
+值得一提的是，Python 中的 if 语句支持链式比较，形如 `a < x < b, a < x >= b` 等：
+```python
+a = 0
+if 1 < 2 > 1.5:
+    a = 1
+a
+1
+```
+三元操作实质是高度简化的 if 环境，形如 `X = a if flag else b`：
+```python
+a = 1 if 2 < 1 else 2
+a
+2
+```
+## for 语句
+Python 的循环语句中，像其他语言一样，有 `break`（跳出循环体） 与 `continue`（循环步进） 关键词可以使用。
+
+for 语句借助关键词 in 使用：（函数 `range(N, M=0, s=1)` 是一个生成等差数列的函数，位于左闭右开区间`[M,N)`上且公差为 s）。
+```python
+for i in range(3):
+    print(i)
+0
+1
+2
+```
+注意到字典的 d.items(), d.keys(), d.values() 命令也常常用于 for 语句：
+```python
+d = {"a": 1, "b": 2, "c": 3}
+for k, v in d.items():
+    print(k, v)
+b 2
+c 3
+a 1
+```
+以上等价于：
+```python
+for k in d.keys():
+    print(k, d[k])
+b 2
+c 3
+a 1
+```
+Python 中的 `for` 语句可选 `else` 语法块，表示 `for` 语句正常结束后执行的内容（中途 `break` 不属于正常结束）。这对于处理一些 break 操作很有帮助。例如：
+```python
+a = 0
+flag = 0
+for i in range(5):
+    if i > 2:
+        flag = 1
+        break
+if flag == 1:
+    a = 1
+a
+1
+```
+这在 Python 中显得太复杂了，直接使用 `for…else…`即可：
+```python
+a = 1
+for i in range(5):
+    if i > 1:
+        break
+else:
+    a = 0
+a
+1
+```
+## while 语句
+while 语句的 `else` 语法块，指明了退出 while 循环后立刻执行的内容；它不是必需的。
+
+如果你想要将 while 语句内部的参数传出（比如下例的计数器终值），这是一个不错的方案。
+```python
+count = 1
+while count < 5:
+    a = count
+    count *= 2
+else:
+    b = count
+
+print(a, b)
+4 8
+```
+## 列表解析
+列表解析是一种创建列表的高度缩写方式：
+```python
+lst = [x ** 2 for x in range(4)]
+lst
+[0, 1, 4, 9]
+```
+也可以配合 if 语句：
+```python
+lst = [x ** 2 for x in range(4) if x > 0]
+lst
+[1, 4, 9]
+```
+类似的，也有字典解析，以及下文会介绍的生成器，也有生成器解析（把外围的括号换成圆括号即可）：
+```python
+{n: n ** 2 for n in range(3)}
+{0: 0, 1: 1, 2: 4}
+```
+# 函数
+本节介绍 Python 函数的基础特点，以及一些实用函数。
+
+## 函数定义与判断
+使用 `def` 关键字。三连双引号间的内容被视为函数的帮助字符串，可以通过 `help()` 命令查看。
+```python
+def func(a, b=0):
+    """
+    This is a function that can meow.
+    """
+    return " ".join(["meow"] * (a + b))
+```
+调用函数：
+```python
+func(2)  # 单参数，仅 a 
+'meow meow'
+func(2, 3)  # 双参数， a 与 b 都被传入
+'meow meow meow meow meow'
+help(func)
+Help on function func in module __main__:
+
+func(a, b=0)
+    This is a function that can meow.
+```
+通过 `callable()` 可以判断一个对象是否是一个可调用的函数：
+```python
+callable(func)
+True
+```
+
+## 不定参函数
+利用序列（或元组）与字典，向函数传参。前者在传入时需要加上一个星号，后者需要两个。
+```python
+lst = [1, 3, 4]
+d = {"a": 2, "b": 3, "c": 5}
+print("{}+{}={}".format(*lst), "{a}+{b}={c}".format(**d))
+1+3=4 2+3=5
+```
+## zip 函数
+zip() 函数的作用是“合并”多个列表为一个。其返回值是一个列表，列表内的元素类型是元组。如果待合并的列表长度不同，以最短的为准。
+```python
+a = [1, 2, 3, 4]
+b = [5 ,6, 7]
+c = "abcd"
+list(zip(a, b, c))
+[(1, 5, 'a'), (2, 6, 'b'), (3, 7, 'c')]
+```
+它比较常用于交换字典的键与值：
+```python
+dict(zip(d.values(), d.keys()))
+{2: 'a', 3: 'b', 5: 'c'}
+```
+## lambda 函数
+一种匿名函数的声明方式。如果你使用过 `MATLAB`，你可能熟悉这一类概念。
+```python
+func = lambda x, y: x + y
+func(2, 5)
+7
+```
+## map 函数
+`map()` 能够对传入的序列进行依次操作，并将结果返回为一个可转换为列表的 `map` 对象。通常列表解析（或生成器解析）可以实现与其同样的工作。
+```python
+lst = list(map(lambda x: x + 1, range (5)))
+print(lst)
+[1, 2, 3, 4, 5]
+f = lambda x: x + 1
+[f(x) for x in range(5)]
+[1, 2, 3, 4, 5]
+```
+## filter 函数
+给定序列，对于满足某规则的部分（即 True），予以返回。
+```python
+list(filter(lambda x: x > 0, range(-3, 3)))
+[1, 2]
+```
+## reduce 函数
+该函数在 Python 2 中是可以直接调用的，但在 Python 3 中需要从 `functools` 模块进行调用。
+```python
+from functools import reduce
+reduce(lambda x, y: x + y, range (5))  # 0+1+2+3+4
+10
+```
+## enumerate 函数
+它允许你像 d.items() 那样，用类似的方式操作列表：
+```python
+a = [1, 3, 5]
+for i, v in enumerate(a):
+    print("lst[{}] = {}".format(i, v))
+
+lst[0] = 1
+lst[1] = 3
+lst[2] = 5
+```
+# 装饰器：算子
+装饰器是函数的函数——传入的参数是一个函数，返回的值也是一个函数。相当于一个函数集到另一个函数集的映射，可以理解为数学意义上的算子。
+
+首先来看一个简单的例子：函数可以被赋值给一个变量。
+```python
+def pyrint(data="Python"):
+    return data.upper()
+
+f = pyrint
+f()
+'PYTHON'
+```
+还可以通过 `__name__` 来得到当前函数的名称：
+```python
+f.__name__
+'pyrint'
+```
+那什么时候需要装饰器呢？比如在函数需要被重用、但又不能直接改写 `def `的场合（在维护中应该不少见吧！）。例如，我们希望在返回值之前，把函数名也打印出来：
+```python
+def showname(func):
+    def subfunc(*args, **kwarg):
+        print("FUNCTION {} called.".format(func.__name__))
+        return func(*args, **kwarg)
+    return subfunc
+```
+这样如果我们通过 `showname(pyrint)` 这种形式，就能够在 `pyrint` 函数被调用之前，额外打印一行内容。
+
+想要改动该函数，不需要改动 def 语句以下的内容，只需要用 `@showname` 命令来应用这个装饰器：
+```python
+@showname
+def pyrint(data="Python"):
+    return data.upper()
+pyrint()
+FUNCTION pyrint called.
+
+'PYTHON'
+```
+如果装饰器需要传递参数，那么，需要在定义时，外层再嵌套一个函数：
+```python
+def showname(num=1):
+    def decorator(func):
+        def subfunc(*args, **kwarg):
+            print("Call time: {}. FUNCTION {} called.".format(num, func.__name__))
+            return func(*args, **kwarg)
+        return subfunc
+    return decorator
+
+@showname(2)
+def pyrint(data="Python"):
+    return data.upper()
+
+pyrint()
+Call time: 2. FUNCTION pyrint called.
+
+'PYTHON'
+```
+不过装饰器被应用于函数定义之前时，函数的 `__name__` 属性会改变。比如上例：
+```python
+pyrint.__name__
+'subfunc'
+使用模块 functools 来解决这一问题：
+
+import functools
+
+def showname(num=1):
+    def decorator(func):
+        @functools.wraps(func)  # 加上这一行
+        def subfunc(*args, **kwarg):
+            print("Call time: {}. FUNCTION {} called.".format(num, func.__name__))
+            return func(*args, **kwarg)
+        return subfunc
+    return decorator
+
+@showname(2)
+def pyrint(data="Python"):
+    return data.upper()
+
+pyrint.__name__
+'pyrint'
+```
+# 迭代器 [itertools]
+迭代器与生成器在内存优化上很有意义。
+
+## 迭代器
+迭代器最显著的特征是拥有 `__iter__()` 和 `__next__()` 方法；它像一个链表。如果它指向末尾，那么再次执行 `__next__()` 时会报错。一个例子：
+```python
+a = [1, 2, 3]
+b = iter(a)
+print(b.__next__(), b.__next__())  # 或者使用 next(b)
+1 2
+```
+实际上，Python 3 内置了一个 `itertools` 的库，里面有诸如 `cycle` 和 `count` 等适用于迭代器的函数：
+```python
+import itertools
+
+# count: 给定首项与公差的无穷等差数列
+p = itertools.count(start = 1, step = 0.5)
+print(p.__next__(), p.__next__())
+
+# cycle: 周期循环的无穷序列
+p = itertools.cycle(list("AB"))
+print(next(p), next(p), next(p))
+
+# islice: 从无穷序列中切片
+p = itertools.cycle(list("AB"))
+print(list(itertools.islice(p, 0, 4)))
+1 1.5
+A B A
+['A', 'B', 'A', 'B']
+```
+请时刻注意当前指向的迭代器位置——失之毫厘，谬以千里。
+
+## 生成器
+生成器是迭代器的一种，其实质是定义中含有 yield 关键词的函数。它没有 return() 语句。
+
+生成器可以直接使用类似列表解析的方式，称为生成器解析。例如：(i for i in range(10)。
+```python
+def Fib(N):  # 斐波那契数列
+    n, former, later = 0, 0, 1
+    while n < N:
+        yield later
+        former, later = later, later + former
+        n += 1
+
+list(Fib(5))
+[1, 1, 2, 3, 5]
+```
+上例与普通的写法看上去差别不大，但实际上可以将 while 语句改写为 `while True`，删除变量 n，在外部借助 itertools 的 `islice` 函数来截取。这在函数定义时对代码的压缩是显然的。
+```python
+def iterFib():
+    former, later = 0, 1
+    while True:
+        yield later
+        former, later = later, later + former
+
+list(itertools.islice(iterFib(), 0, 5))
+[1, 1, 2, 3, 5]
+```
+# 错误：`try()` 语句
+常见的错误有以下几种：
+
+- ZeroDivisionError: 除数为 0.
+- SyntaxError：语法错误。
+- IndexError：索引超界。
+- KeyError：字典键不存在。
+- IOError：读写错误。
+try() 语句的常见写法：
+```python
+try:
+    a = 1 
+except ZeroDivisionError as e:
+    print(e)
+    exit()
+else:  # 如果无错误，执行
+    print(a)
+finally:  # 不管有无错误均执行
+    print("-- End --")
+1
+-- End --
+```
+其中，`else` 与 `finally` 语句都不是必需的。如果不想输出错误信息、或不能预先判断可能的错误类型，可以使用仅含 exit() 语句的 `except` 块。
+
+## 多个 except 块
+一个 try 语法块是可以跟着多个 `except` 的；如果靠前的 except 捕获了错误，之后的就不会运行。 这也就是说，如果错误之间有继承关系时，子错误需要放在父错误之前尝试 except，否则子错误永远也不可能被捕获。
+
+比如上一节的例子中，`ZeroDivisionError` 是 `ArithmeticError` 下的子错误，而 `ArithmeticError` 又是 Exception 下的子错误（当不清楚错误的类型时，Exception 可以捕获绝大多数错误）。关于错误的继承关系，参考：Python - Exception Hierarchy 官方页面。
+
+一个例子：
+```python
+try:
+    a = 1 / 0
+except Exception:
+    print("Exception")
+    exit()
+except ZeroDivisionError:
+    print("ZeroDivisionError")
+    exit()
+else:
+    print("No error.")
+finally:
+    print("-- End --")
+输出 Exception 与 – End –。
+```
+## 错误的捕获
+错误在很多地方都可能发生，那是否需要在可能的地方都加上 try 语句呢？当然不是。建议只在主代码中加入 try 语句，因为 Python 会自动跟踪到错误产生的源头何在。
+
+## 错误的抛出及上抛
+有时候我们想人为抛出一个错误，这是使用 `raise` 即可：
+```
+# raise TypeError("Wrong type.")
+```
+如果在函数中没有处理错误的语句，可能在捕获错误后将其上抛。记住，捕获错误只是为了记录错误的产生，并不意味者必须原地解决错误。
+```python
+def makeerror(n):
+    if n == 0:
+        raise ValueError("Divided by zero.")
+    return 1 / n
+
+def callerror():
+    try:
+        makeerror(0)
+    except ValueError as e:
+        print("ValueError detected.")
+        raise
+
+# 输出 "ValueError detected." 并打印错误日志
+# callerror()
+```
+上面的 `raise` 命令没有紧跟任何参数，表示将错误原样上抛。你也可以手动指定上抛的错误类型，并不需要与原错误类型一致。甚至你可以定义一个错误（继承某一错误类）：
+```python
+class MyError(ValueError):
+    print("This is MyError.")
+
+# raise MyError
+This is MyError.
+```
+# 文件读写
+open() 函数用于文件的读写操作。一般我们会在操作文件时，引入 os 模块（os 模块的用法参考“常用模块”一节的内容）。
+```python
+import os
+```
+`open()` 函数常常配合 `with` 语法块进行使用，它会在语法块结束时自动关闭文件。该函数：
+```python
+open(file, mode="r", encoding=None)
+```
+第一参数是包含文件名的路径（传入基于当前目录的相对路径，传入或者绝对路径），mode 参数是读写操作方式；`encoding` 是编码类型，一般取`”utf8”`。其中，读写操作方式常用的有：
+
+|参数|	含义|
+|:---:|:---:|
+|“r”	|（默认）读。|
+|“w”	|写。该模式会覆盖原有内容；如文件不存在，会自动新建。|
+|“x”	|创建新文件并写入。|
+|“a”	|在已有文件的尾部追加。|
+## 一般读写操作：`read() / readlines()`
+函数 `read()` 将整个文件读为一个字符串，来看一个例子：
+```python
+datapath = os.path.join(os.getcwd(), "data", "iris.data.csv")
+with open(datapath, "r", encoding="utf8") as f:
+    rawtext = f.read()
+
+rawtext[:200]
+'5.1,3.5,1.4,0.2,Iris-setosa\n4.9,3.0,1.4,0.2,Iris-setosa\n4.7,3.2,1.3,0.2,Iris-setosa\n4.6,3.1,1.5,0.2,Iris-setosa\n5.0,3.6,1.4,0.2,Iris-setosa\n5.4,3.9,1.7,0.4,Iris-setosa\n4.6,3.4,1.4,0.3,Iris-setosa\n5.0,'
+```
+函数 `readlines()` 将整个文件读为一个列表，文件的每一行对应列表的一个元素。
+```python
+with open(datapath, "r", encoding="utf8") as f:
+    rawtext = f.readlines()
+
+rawtext[:3]
+['5.1,3.5,1.4,0.2,Iris-setosa\n',
+ '4.9,3.0,1.4,0.2,Iris-setosa\n',
+ '4.7,3.2,1.3,0.2,Iris-setosa\n']
+ ```
+上述的 `readlines()` 函数实质等同于列表解析：
+```python
+with open(datapath, "r", encoding="utf8") as f:
+    rawtext = [line for line in f]
+
+rawtext[:3]
+['5.1,3.5,1.4,0.2,Iris-setosa\n',
+ '4.9,3.0,1.4,0.2,Iris-setosa\n',
+ '4.7,3.2,1.3,0.2,Iris-setosa\n']
+```
+文件写入，使用 `write()` 函数。一个简单的例子：
+```python
+with open(datapath, "w") as f:
+   f.write("Sometimes naive.")
+```
+## 大文件读取：`readline()`
+如果文件比较大，使用 `read()/readlines()` 函数直接读入可能会占用太多内存。推荐使用函数 `readline()`，一种迭代器式的读取方法。
+```python
+with open(datapath, "r", encoding="utf8") as f:
+    print(f.readline().strip())
+    print(f.readline().strip())
+5.1,3.5,1.4,0.2,Iris-setosa
+4.9,3.0,1.4,0.2,Iris-setosa
+```
+你会发现两次结果是不同的，这是因为迭代器内部的“指针”向后移动了。
+
+怎样获取 / 移动“指针”的位置呢？使用 tell() / seek() 命令。
+```python
+with open(datapath, "r", encoding="utf8") as f:
+    print(f.tell(), f.readline().strip())
+    print(f.tell(), f.readline().strip())
+    f.seek(0)  # 回到文件头
+    print(f.tell(), f.readline().strip())
+0 5.1,3.5,1.4,0.2,Iris-setosa
+28 4.9,3.0,1.4,0.2,Iris-setosa
+0 5.1,3.5,1.4,0.2,Iris-setosa
+```
+# 类
+类的成员包括属性（`attribute`）与方法（`method`）两种。例子：
+```python
+class MyClass:
+    """
+    This is a class that can meow!
+    """
+    animal = "cat"  # An attribute
+    def talk(self):  # A method
+        return "Meow"
+
+# An instance of the class
+a = MyClass()
+print(a.animal, a.talk())
+cat Meow
+```
+上例中的 `self` 表示类的实例，所有类内部的方法都需要把该参数放在首位（你也不可不用 self 而使用 this 等，但是 `self` 是惯例）。例如，`self.animal` 就表示了实例的 animal 属性。这与 C# 等语言中的“this.animal”是类似的。
+
+下例证明了 `self` 代表的实质是类的实例，而不是类本身。
+```python
+class EgClass:
+    def __init__(self):
+        print(self)  # 实例，有对应地址
+        print(self.__class__)  # 类
+
+a = EgClass()
+<__main__.EgClass object at 0x000002531C0AF860>
+<class '__main__.EgClass'>
+```
+## 构造函数：`__init__()`
+类的构造函数是 `__init__()` （左右均为双下划线），用于初始化实例。在声明实例时，该函数自动被调用。
+```python
+class MyClass2:
+    def __init__(self, animal="cat"):
+        self.animal = animal
+
+a = MyClass2("dog")
+a.animal
+'dog'
+```
+## 封装
+类的重要特性是封装性，即部分变量只能在其内部修改或访问，不能从类的外部进行处理。Python 中的封装非常简单，只要把属性或方法的名称前缀设置为双下划线即可。
+
+由此可见，构造函数 `__init__()` 是最基本的一个私有方法。一个例子：
+```python
+class MyClass3:
+    def __init__(self, animal="cat"):
+        self.__animal = animal
+        self.__foo()
+    def __foo(self):
+        self.__animal = "rabbit"
+    def show(self):
+        print(self.__animal)
+
+a = MyClass3("dog")
+a.show()
+rabbit
+```
+如果想直接调用 `__foo() 或者 __animal`，都会被禁止，产生 `AttributeError`。
+```python
+# a.__animal  # AttributeError
+```
+要注意，前后均添加了双下划线的属性，如 __name__ ，表示特殊属性而不是私有属性，是可以从外部访问的。
+
+## 继承
+下面是一个著名的猫与狗的例子；类 Cat 与 Dog 都继承自 Animal，同时也都重载了方法 talk()。
+```python
+class Animal:
+    def talk(self):
+        pass # 表示定义留空
+
+class Cat(Animal): # 从Animal 继承
+    def talk(self): # 重写talk()
+        print('Meow')
+
+class Dog(Animal):
+    def talk(self):
+        print('Woof')
+
+a, b = Cat(), Dog()
+a.talk() # 'Meow'
+b.talk() # 'Woof'
+Meow
+Woof
+```
+通过 `isinstance()` 函数可以判断一个对象是否是某个类（或其子类）的实例：
+```python
+print(isinstance(a, Cat), isinstance(a, Animal))
+True True
+或者：
+
+type(a).__name__
+'Cat'
+```
+当然，类也可以多继承。写在左侧的类的属性与方法，在继承时会被优先采用。例如：
+```python
+class Pet:
+    def talk(self):
+        print("Pet")
+
+class Cat2(Pet, Cat):
+    pass
+
+a = Cat2()
+a.talk()
+Pet
+```
+## @property 装饰器
+装饰器 `@property `可以被用于限制类属性的读写行为。比如，一个普通的类，如果想封装一个属性，却允许从外部读取它的值，一般我们用 `getter` 函数实现：
+```python
+class Person:
+    def __init__(self):
+        self.__name = "Py"
+    def get_name(self):
+        return self.__name
+a = Person()
+a.get_name()
+'Py'
+```
+不得不说这实在是麻烦了，代码里一堆 get 函数满天飞并不令人愉快。而且还不能忘记它是一个函数，需要在尾部加上括号。
+
+装饰器 `@property` 可以将一个方法伪装成同名的属性，因此装饰了 `getter` 函数后，调用时就不用加上尾部的括号了：
+```python
+class Person:
+    def __init__(self):
+        self.__name = "Py"
+        
+    @property
+    def name(self):
+        return self.__name
+a = Person()
+a.name
+'Py'
+```
+而且，如果你想从外部修改该属性的值，会产生错误：
+```python
+a.name = 1
+---------------------------------------------------------------------------
+
+AttributeError                            Traceback (most recent call last)
+
+<ipython-input-97-8c607f2aa25b> in <module>()
+----> 1 a.name = 1
+
+
+AttributeError: can't set attribute
+```
+但同时，我们也可以指定其 setter 函数（该装饰器 @age.setter 在用 @property 装饰 age 方法后会自动生成），让属性修改成为可能，甚至附加修改条件：
+```python
+class Person:
+    def __init__(self):
+        self.__age = 20
+        
+    @property
+    def age(self):
+        return self.__age
+    
+    @age.setter
+    def age(self, value):
+        if not isinstance(value, int):
+            raise ValueError("Age should be an integer.")
+        else:
+            self.__age = value
+a = Person()
+a.age = 30
+a.age
+30
+```
+不传入整数会报错：
+```python
+a.age = 0.5
+---------------------------------------------------------------------------
+
+ValueError                                Traceback (most recent call last)
+
+<ipython-input-100-001bfa8fe26b> in <module>()
+----> 1 a.age = 0.5
+
+
+<ipython-input-98-83364d5faa13> in age(self, value)
+     10     def age(self, value):
+     11         if not isinstance(value, int):
+---> 12             raise ValueError("Age should be an integer.")
+     13         else:
+     14             self.__age = value
+
+
+ValueError: Age should be an integer.
+```
+## 类的特殊属性与方法
+### 属性 `__dict__`
+首先是 `__dict__`属性，用于查看类的属性与方法，返回一个字典。
+```python
+a = MyClass()
+MyClass.__dict__
+mappingproxy({'__dict__': <attribute '__dict__' of 'MyClass' objects>,
+              '__doc__': '\n    This is a class that can meow!\n    ',
+              '__module__': '__main__',
+              '__weakref__': <attribute '__weakref__' of 'MyClass' objects>,
+              'animal': 'cat',
+              'talk': <function __main__.MyClass.talk>})
+```
+需要注意的是，此时实例 a 的属性没有被更改过，实例的 __dict__ 是一个空字典：
+```python
+print(a.__dict__, a.animal)
+{} cat
+```
+类的 `__dict__` 方法下的同名键，与实例具有相同值。
+```python
+MyClass.__dict__["animal"]
+'cat'
+```
+一旦被从外部更改，实例 a 的 __dict__ 字典就不再为空。
+```python
+a.animal = "dog"
+print(a.__dict__, a.animal)
+{'animal': 'dog'} dog
+```
+### 属性 `__slots__`
+从上面可以看到，非私有的类属性可以从外部更改值，而且属性还能直接从外部增加。__slots__ 属性的作用就在于使类的属性不能从外部进行更改、追加。它能够限制属性滥用，并在优化内存上也有意义。
+```python
+class MySlotClass():
+    __slots__ = ("meow", "woof")
+    def __init__(self):
+        self.meow = "Meow"
+        self.woof = "Woof"
+    
+a = MySlotClass()
+MySlotClass.__dict__
+mappingproxy({'__doc__': None,
+              '__init__': <function __main__.MySlotClass.__init__>,
+              '__module__': '__main__',
+              '__slots__': ('meow', 'woof'),
+              'meow': <member 'meow' of 'MySlotClass' objects>,
+              'woof': <member 'woof' of 'MySlotClass' objects>})
+```
+此时，如果使用 `a.__dict__`，结果不会返回空字典，而是会报错。
+
+### 运算符重载
+特别地，Python 提供了运算符重载的功能。常用的对应如下（参考 官方页面）：
+
+方法	含义	应用
+一元运算符	 	 
+__len__	长度	len(a)
+__bool__	逻辑值	bool(a)
+__neg__	取负值	-a
+__str__ / __repr__	字符串形式	repr(a) / str(a), print(a)
+二元运算符	 	 
+__add__	加	a + b, a += b
+__sub__	减	a - b, a -= b
+__mul__	乘	a * b, a *= b
+__div__	除	a / b, a /= b
+__pow__	乘方	a ** b, a **= b
+__radd__	左加	… + a
+二元关系符	 	 
+__lt__ / __le__	小于 / 小于等于	a < b, a <= b
+__gt__ / __ge__	大于 / 大于等于	a > b, a >= b
+__eq__ / __ne__	等于 / 不等于	a == b, a != b
+比如下例中，对多个运算进行了重载，完成了二维向量在加减法上与向量、与数运算的基本定义。
+```python
+class Vector:
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
+   
+    def __add__(self, another):
+        if isinstance(another, Vector):
+            c, d = another.a, another.b
+        else:
+            c, d = another, another
+        return Vector(self.a + c, self.b + d)
+    
+    def __radd__(self, another):
+        return self.__add__(another)
+    
+    def __neg__(self):
+        return Vector(-self.a, -self.b)
+    
+    def __sub__(self, another):
+        return self.__add__(-another)
+    
+    def __str__(self):
+        return "Vector({},{})".format(self.a, self.b)
+
+v1 = Vector(0,3)
+v2 = Vector(5,-2)
+print(v1 - 1, -v2, v1 + v2, v1 - v2)
+Vector(-1,2) Vector(-5,2) Vector(5,1) Vector(-5,5)
+```
+其中，`__repr__()` 与 `__str__()` 的主要区别在于，前者在交互式步骤中显示结果，后者在 print 函数中显示结果。
+
+例如上例，如果直接输入 v1，不会以 “Vector(0,3)”的形式显示。
+```python
+v1  # 在类中附加定义： __repr__ = __str__ 即可解决问题。
+<__main__.Vector at 0x2531c129c88>
+```
+## 迭代行为
+在类中也能定义迭代行为，需要 __iter__() 与 __next__() 方法。
+```python
+# 该例改编自官方文档
+class MyClass4:
+    def __init__(self, lst):
+        self.data = lst
+        self.__index = len(lst)
+    def __iter__(self):
+        return self
+    def __next__(self):
+        if self.__index == 0:
+            raise StopIteration
+        self.__index -= 1
+        return self.data[self.__index]
+
+a = MyClass4("Meow")
+for char in a:
+    print(char)
+w
+o
+e
+M
+```
+
+# 常用模块
+下面介绍几个常用的 Python 标准模块（即随 Python 安装的模块）。更多的第三方模块，例如 NumPy, pandas, matplotlib，可以参考本系列博文的其他文章。
+
+## os 模块
+这个模块应该是 Python 自带模块中使用率最高的一个了。一些例子：
+```python
+# import os
+#
+# ----- 文件操作 -----
+# os.rename("old.py", "new.py")  # 重命名
+# os.remove("a.py")  # 删除
+# os.stat("b.py")  # 查看文件属性
+#
+# ----- 路径操作 -----
+# os.getcwd()  # 获取当前目录
+# os.chdir(r"d:\list")  # 更改当前目录为
+# os.chdir(os.pardir)  # 返回上一级目录
+# os.mkdir('newfolder ')  # 在当前目录新建一个文件夹
+# os.listdir('c:\list')  # 列出文件夹下所有文件的列表
+# os.removedirs('thefolder ')  # 删除空文件夹
+# os.path.isfile/ispath("f")  # 检查路径是文件或是目录
+# os.path.exists("f")  # 检查路径是否存在
+# 
+# ----- 操作平台相关 -----
+# os.sep  # 当前操作系统的路径分隔符
+# os.linesep  # 当前操作系统的换行符
+# os.path.join(r"c:\abc", "d")  # 连接字串成为路径
+```
+## sys 模块
+一般我很少用到这个模块。可能有这么几个命令会用到：
+- sys.argv：能够传递从命令行接受的参数到代码内。
+- sys.platform：当前操作系统平台。
+- sys.exit()：无参数时抛出 SystemExit 错误并退出；有参数时会在退出前输出对应的字符串到屏幕。
+```python
+import sys
+sys.platform
+'win32'
+```
+一个 `sys.argv` 的例子：
+```
+sys.argv
+['e:\\python\\lib\\site-packages\\ipykernel_launcher.py',
+ '-f',
+ 'C:\\Users\\wklchris\\AppData\\Roaming\\jupyter\\runtime\\kernel-3724c4c9-2130-485d-b388-7a84379fd043.json']
+ ```
+以上不是典型的例子，因为并不是在命令行下运行的。命令行下通常有如下格式：
+```bash
+python test.py hello
+```
+此时，sys.argv[0] = test.py，sys.argv[1] = hello.
+
+## re 模块：正则表达式
+参考本文附录。
+
+## 其他模块
+- collection 模块：
+  - 提供了一种双端列表 deque，可以用 appendleft, extendleft, popleft 等方法从 deque 的左侧（也就是lst[0]）进行操作。注意，deque 的更新操作比 list 更快，但读取操作比 list 慢。
+  - 提供了一种缺省字典`defaultdict`，可以直接操作键值（即使这个键先前未定义）；首次操作时会赋一个合理的初值，比如首次调用 d["a"] += 1 而字典本身没有 “a” 键时，会自动初始化 “a” 键并赋初值 0。
+- calendar 模块：判断星期、闰年，输出日历等等。
+- itertools 模块：在本文“迭代器”小节已进行了简要介绍。
+- logging 模块：在调试中可能会使用。
+- urllib 模块：这是一个 HTML 请求模块，常用于爬虫。
+
+# 调试与测试
+Python 中有一些内置的办法进行调试与测试。
+
+## 断言：assert
+断言的含义在于，如果断言失败（False），那么代码会被终止（抛出一个`AssertionError`）。比如：
+```python
+n = 0
+assert(n != 0)
+1 / n
+---------------------------------------------------------------------------
+
+AssertionError                            Traceback (most recent call last)
+
+<ipython-input-112-e53f92f6c644> in <module>()
+      1 n = 0
+----> 2 assert(n != 0)
+      3 1 / n
+
+
+AssertionError: 
+```
+与大家一贯喜欢使用的 print 调试法相比，断言语句可以用命令行参数 -O 忽略。这样所有的 assert() 语句都不会被执行。
+```bash
+$ python -O main.py
+```
+## 日志调试：logging 模块
+logging 模块支持将错误日志输出（到控制台或者到文件）。
+
+此乃调试神器。延伸阅读： logging 官方基础教程。
+```
+import logging
+# 该行也可能通过控制台：$ python main.py --log=WARNING 的方式实现
+logging.basicConfig(level=logging.WARNING)
+n = 0
+logging.warning("n = {}".format(n))
+WARNING:root:n = 0
+```
+logging 模块的灵活之处在于你可以记录信息的级别（`DEBUG，INFO，WARNING，ERROR，CRITICAL`），各级别的作用如下：
+
+- DEBUG：最详细的级别，所有详细日志都会被输出。
+- INFO：检测代码是否按照预期执行。
+- WARNING：非预期的事件发生了，或者可能在近期发生（例如：低磁盘空间）。但代码仍然执行。
+- ERROR：发生了级别更高的问题，某些功能无法正常实现。
+- CRITICAL：严重错误，代码可能无法继续运行。
+通过 `filename` 参数，可以将日志写入到文件。一般使用 `DEBUG` 级别，即输出所有信息。
+```python
+# logging.basicConfig(filename="log.log", level=logging.DEBUG)
+```
+默认会将日志追加到文件末尾，如果想要覆写文件而不是追加，使用 filemode 参数：
+```python
+# logging.basicConfig(filename="log.log", filemode="w", level=logging.DEBUG)
+```
+更改日志格格式，使用 format 参数。一般来说，常用的格式码（格式码后加 s 表示字符串）有：
+
+- `%(levelname)`：当前日志字串级别。
+- `%(message)`：当前日志字串。
+- `%(asctime)`：当前时间。默认 datefmt 参数为 `%Y-%m-%d %I:%M:%S`
+例子。下例会输出形如：”01/23/1900 08:05:05 PM is when this event was logged.” 这样的格式。
+```python
+# logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S %p')
+# logging.warning('is when this event was logged.')
+# 常用的格式：
+# logging.basicConfig(format="%(levelname)s: %(message)s")
+```
+还可以通过配置文件来代替 basicConfig 命令，并进行设置 logger 等更高级的配置。这部分可以参考：此处。
+```python
+# import logging.config
+
+# logging.config.fileConfig('logging.conf')
+```
+
+# 附录：正则表达式
+正则表达式的基础内容参考本博客的这篇博文：正则表达式。注意：如果要保存一个正则表达式供多次使用，请存储其 `compile` 后的结果，避免反复编译。
+
+- re.compile(exp)：编译正则表达式。
+- re.compile(exp).match(str)：判断正则表达式能否匹配一个字串。可以 bool() 结果来获知是否匹配。
+  - re.compile(exp).match(str).groups()：将匹配结果返回为单个字符串（无子组时）或元组（有子组时）。
+  - re.compile(exp).findall(str)：找出字符串中所有匹配表达式的子串。返回列表。
+- re.split(exp, str)：用表达式来分割字符串，相当于 str.split() 的增强版。
+```python
+import re
+bool(re.match(r"\d", "1"))
+True
+phone_re = re.compile(r'\d{3,4}-\d{7,8}')
+phone_re.match('010-12345678').group()
+'010-12345678'
+# 如果在正则表达式中添加了子组（小括号），那么会返回子组依顺序组成的一个元组
+phone_re = re.compile(r'(\d{3,4})-(\d{7,8})')
+phone_re.match('010-12345678').groups()
+('010', '12345678')
+phone_re = re.compile(r'\d{3,4}-\d{7,8}')  # 寻找所有子串
+phone_set = '010-12345678, 021-65439876 '
+phone_re.findall(phone_set)
+['010-12345678', '021-65439876']
+s = 'a b   c'  # 用 re.split() 处理连续的空格
+print(s.split(' '), re.split(r"\s+", s))
+['a', 'b', '', '', 'c'] ['a', 'b', 'c']
+```
