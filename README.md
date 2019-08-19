@@ -9,4 +9,4 @@
 - tensorflow
 
 ## 微信公众号
-![https://github.com/ddxygq/PyCode/blob/master/source/image/0.jpg]()
+![](https://github.com/ddxygq/PyCode/blob/master/source/image/0.jpg)
