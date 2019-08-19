@@ -12,6 +12,7 @@ def logistic_plot():
 	y = map(logistic, x)
 	print(x,y)
 	plt.plot(x, y)
+	plt.show()
 
 
 if __name__ == '__main__':

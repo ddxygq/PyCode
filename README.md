@@ -9,4 +9,4 @@
 - tensorflow
 
 ## 微信公众号
-![/source/image/数据分析挖掘与算法推广.jpg]()
+![https://github.com/ddxygq/PyCode/blob/master/source/image/0.jpg]()
