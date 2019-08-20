@@ -1,3 +1,5 @@
+import functools
+
 # 类装饰器
 class di(object):
     def __init__(self, f):

@@ -1,3 +1,5 @@
+import functools
+
 # 简单装饰器
 def di(f):
     """
@@ -5,6 +7,8 @@ def di(f):
     :param f: 传入一个函数
     :return:
     """
+    # 把原始函数的__name__等属性复制到wrapper()
+    @functools.wraps(f)
     def wrapper():
         print('%s 打卡,滴...' % f.__name__)
         return f()
@@ -35,6 +39,7 @@ if __name__ == '__main__':
     # 第一种，简单装饰器
     a = di(boot)
     a1 = di(open)
+    print(a.__name__) # wrapper
     a()
     a1()
 

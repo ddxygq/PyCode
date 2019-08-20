@@ -1,4 +1,3 @@
-
 def di(f):
     print('%s 打卡,滴...' % f.__name__)
     return f()

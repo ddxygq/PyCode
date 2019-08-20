@@ -1,12 +1,15 @@
+import functools
+
 # 带参数的装饰器
 def di_args(time):
-
     def di(f):
         """
         程序员开机之前，前台开门之前，都需要先在门外指纹机打卡。
         :param f: 传入一个函数
         :return:
         """
+        # 把原始函数的__name__等属性复制到wrapper()
+        @functools.wraps(f)
         def wrapper(*args, **kwargs):
             if time < '9:00':
                 print('来的真早，很棒。。。')
