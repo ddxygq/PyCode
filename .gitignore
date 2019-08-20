@@ -4,3 +4,4 @@ db/mysql/__pycache__
 
 tensorflow/MNIST_data
 tensorflow/__pycache__
+.idea

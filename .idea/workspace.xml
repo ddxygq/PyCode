@@ -2,31 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="193e4938-cdbe-4e6f-8e0d-d51fec8d1caa" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/web/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/flask/flaskr/schema.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/flask/quick_start/cookies_demo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/flask/quick_start/error_page.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/flask/quick_start/flash_demo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/flask/quick_start/hello_world.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/flask/quick_start/layout_demo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/flask/quick_start/logging_demo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/flask/quick_start/session_demo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/flask/quick_start/template_demo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/flask/quick_start/templates/cookie_demo.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/flask/quick_start/templates/flash_demo/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/flask/quick_start/templates/flash_demo/layout.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/flask/quick_start/templates/flash_demo/login.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/flask/quick_start/templates/hello.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/flask/quick_start/templates/layout.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/flask/quick_start/templates/layout_demo.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/flask/quick_start/templates/page_not_found.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/flask/quick_start/templates/upload.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/web/flask/quick_start/upload_file.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/爬虫/beautifulsoup4/demo.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/爬虫/requests_demo/maoyan.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/爬虫/requests_demo/requests_demo.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/PyCode.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/PyCode.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/statistic_helper_week_count.py" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,28 +14,47 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/README.md" />
+        <option value="$PROJECT_DIR$/web/README.md" />
+      </list>
+    </option>
+  </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="137" />
-    <option name="y" value="1" />
-    <option name="width" value="1217" />
-    <option name="height" value="735" />
+    <option name="x" value="214" />
+    <option name="width" value="1708" />
+    <option name="height" value="1040" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="PyCode" type="b2602c69:ProjectViewProjectNode" />
               <item name="PyCode" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PyCode" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PyCode" type="462c0819:PsiDirectoryNode" />
+              <item name="source" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="PyCode" type="b2602c69:ProjectViewProjectNode" />
+              <item name="PyCode" type="462c0819:PsiDirectoryNode" />
+              <item name="source" type="462c0819:PsiDirectoryNode" />
+              <item name="image" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="PyCode" type="b2602c69:ProjectViewProjectNode" />
@@ -97,14 +95,15 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/爬虫" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -164,21 +163,24 @@
       <updated>1566229062471</updated>
       <workItem from="1566229072076" duration="273000" />
       <workItem from="1566229619019" duration="826000" />
+      <workItem from="1566265727518" duration="790000" />
+      <workItem from="1566266535895" duration="335000" />
+      <workItem from="1566266884954" duration="901000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1099000" />
+    <option name="totallyTimeSpent" value="3125000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="137" y="1" width="1217" height="735" extended-state="0" />
+    <frame x="214" y="0" width="1708" height="1040" extended-state="0" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25367966" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23179612" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3296582" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -194,6 +196,8 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="SciView" order="3" />
       <window_info anchor="right" id="Database" order="4" />
+      <window_info anchor="right" id="R Graphics" order="5" />
+      <window_info anchor="right" id="R Packages" order="6" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -214,6 +218,36 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="29" lean-forward="true" selection-start-column="29" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/image/0.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="75">
+            <caret line="3" column="8" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
+          </first_editor>
+          <second_editor>
+            <markdownNavigatorState />
+          </second_editor>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;MarkdownPreviewEditor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="275">
+            <caret line="11" column="23" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
+          </first_editor>
+          <second_editor>
+            <markdownNavigatorState />
+          </second_editor>
         </state>
       </provider>
     </entry>
