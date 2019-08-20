@@ -7,6 +7,7 @@
 - 数学算法
 - 机器学习算法
 - tensorflow
+- flask
 
 ## 微信公众号
 ![](source/image/0.jpg)
