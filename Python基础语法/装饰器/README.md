@@ -269,4 +269,5 @@ decorator end...
 ```
 装饰器有一个典型的应用场景就是打`log`日志，如果所有逻辑都需要日志记录程序的运行状况，那么可以对这些逻辑(函数)加日志模块装饰器，就能达到相应目的。
 
+## 微信公众号
 ![](https://github.com/ddxygq/PyCode/raw/master/source/image/0.jpg)

@@ -1255,3 +1255,6 @@ s = 'a b   c'  # 用 re.split() 处理连续的空格
 print(s.split(' '), re.split(r"\s+", s))
 ['a', 'b', '', '', 'c'] ['a', 'b', 'c']
 ```
+
+## 微信公众号
+![](https://github.com/ddxygq/PyCode/raw/master/source/image/0.jpg)
