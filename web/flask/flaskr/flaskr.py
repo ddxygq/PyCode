@@ -3,22 +3,31 @@ import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
 
-
 app = Flask(__name__, instance_path='D:/我的文件/Codes/PyCode/web/flask/flaskr')
 app.config['USERNAME'] = 'name'
 app.config['PASSWORD'] = 'password'
 app.secret_key = 'ajflafoo8qm.mgaj'
 
-DATABASE = 'D:/我的文件/Codes/PyCode/web/flask/flaskr/entries.db'
+# DATABASE = 'D:/我的文件/Codes/PyCode/web/flask/flaskr/entries.db'
+DATABASE = os.path.join(os.getcwd(), 'entries.db')
 
-def connect_db():
-    """Connects to the specific database."""
-    rv = sqlite3.connect(app.config['DATABASE'])
-    rv.row_factory = sqlite3.Row
-    return rv
+def init_table(db):
+    """first run create table"""
+    result = db.cursor().execute(
+        "SELECT count(*) FROM sqlite_master WHERE type = 'table' AND name = 'entries'").fetchall()
+    table_exists = result[0][0] == 1
+
+    # 不存在，则创建表
+    if not table_exists:
+        with app.open_resource('schema.sql', mode='r') as f:
+            db.cursor().executescript(f.read())
+        db.commit()
+    else:
+        print('entries already exists .')
 
 
 def get_db():
+    """connect to special database"""
     return sqlite3.connect(DATABASE)
 
 
@@ -91,4 +100,7 @@ def logout():
 
 
 if __name__ == '__main__':
+    # 第一次执行，需要初始化数据库，和表
+    # init_table(get_db())
+
     app.run(debug=True)
