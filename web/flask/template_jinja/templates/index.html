@@ -1,0 +1,11 @@
+<!doctype html>
+<title>context_processor</title>
+{% if user %}
+<h1>hello {{user}}</h1>
+{% else %}
+<h1>hello world</h1>
+{% endif %}
+
+<h2>{{g.user}}</h2>
+
+<h1>价钱: {{format_price(2.33)}}</h1>

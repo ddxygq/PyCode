@@ -11,8 +11,10 @@ app.secret_key = 'ajflafoo8qm.mgaj'
 # DATABASE = 'D:/我的文件/Codes/PyCode/web/flask/flaskr/entries.db'
 DATABASE = os.path.join(os.getcwd(), 'entries.db')
 
-def init_table(db):
+
+def init_table():
     """first run create table"""
+    db = get_db()
     result = db.cursor().execute(
         "SELECT count(*) FROM sqlite_master WHERE type = 'table' AND name = 'entries'").fetchall()
     table_exists = result[0][0] == 1
@@ -24,6 +26,8 @@ def init_table(db):
         db.commit()
     else:
         print('entries already exists .')
+
+    db.close()
 
 
 def get_db():
@@ -101,6 +105,6 @@ def logout():
 
 if __name__ == '__main__':
     # 第一次执行，需要初始化数据库，和表
-    # init_table(get_db())
+    init_table()
 
     app.run(debug=True)
