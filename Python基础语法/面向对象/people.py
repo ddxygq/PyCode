@@ -13,6 +13,15 @@ class Teacher(People):
         print('teacher teach.')
 
 
+class Professor(Teacher):
+    def research(self):
+        print('叫兽做研究...')
+
+
+def action(people):
+    people.work()
+
+
 if __name__ == '__main__':
     teacher = Teacher()
     teacher.work()
@@ -21,3 +30,6 @@ if __name__ == '__main__':
     print(isinstance(teacher, People))
     people = People()
     people.work()
+
+    action(People())
+    action(Teacher())

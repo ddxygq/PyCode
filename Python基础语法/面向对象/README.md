@@ -70,3 +70,128 @@ if __name__ == '__main__':
 ```
 这里使用内部的`get_score()`公共方法提供读取数据的功能，使用`set_score()`公共方法提供修改数据的功能。
 **注意**:类似于`__name__`这种双下划线开头结尾的变量是`Python`内部定义的特殊变量，可以直接访问，定义变量时，不允许使用双下划线开头结尾的变量。
+### 继承和多态
+面向对象编程中，定义`class`是可以从已经存在的类继承的，暂且称为父类，子类可以拥有父类的所有属性与函数。
+我们定一个一个类叫`People`，拥有`work()`函数。
+```python
+class People(object):
+    def work(self):
+        print('people work.')
+```
+下面定义一个`Teacher`类，继承了`People`这个父类，拥有`teach`函数(行为)。
+```
+class Teacher(People):
+
+    def teach(self):
+        print('teacher teach.')
+```
+实例化一个`Teacher`实例，加了一个函数`teach`函数，`isinstance`可以判断`teacher`是否属于`People`这个类型。
+```
+if __name__ == '__main__':
+    teacher = Teacher()
+    teacher.work()
+    teacher.teach()
+    print(isinstance(teacher, People))
+```
+结果
+```
+people work.
+teacher teach.
+True
+```
+可以看到，子类`Teacher`继承了父类`People`，也拥有`work`函数，同时也可以添加自己的函数，`isinstance`得出结论：`Teacher`(老师)也是`People`人。
+### 多态
+如果，子类`Teacher`想修改父类`People`的`work`方法呢，这也是可以的：
+```python
+class People(object):
+    def work(self):
+        print('people work.')
+
+
+class Teacher(People):
+
+    # 子类有work()函数，相当于覆盖了父类的函数，调用子类的work()函数。
+    def work(self):
+        print('teacher work.')
+
+    def teach(self):
+        print('teacher teach.')
+
+
+if __name__ == '__main__':
+    teacher = Teacher()
+    teacher.work()
+    teacher.teach()
+```
+结果
+```
+teacher work.
+teacher teach.
+```
+子类重写父类的`work`函数，调用的就不再是父类的而是自己的`work`函数了，打印的是`teacher work.`，这就是**多态**。多态有什么好处呢？
+```
+def action(people):
+    people.work()
+
+
+if __name__ == '__main__':
+    action(People())
+    action(Teacher())
+```
+`action`传入一个`People`的对象`People()`，就调用`People`类的`work()`函数，传入`Teacher`的对象，它肯定也有`work`方法，因为`Teacher`也是`People`类型，就调用`Teacher`对应的`work`函数。结果：
+```
+people work.
+teacher work.
+```
+可以发现，`action`函数可以传入`People`对象，也能传入`Teacher`对象，函数不需要做任何修改，这就是多态的好处。
+
+### 多层继承
+当然了，类也可以多继承，父亲继承于爷爷，孙子继承于父亲，接着上面，`Teacher`老是还可以有教授这个子分类。
+```
+class Professor(Teacher):
+    def research(self):
+        print('叫兽做研究...')
+```
+类型`Professor`继承于`Teacher`，而`Teacher`继承自`People`。
+
+### 获取对象信息
+通过`type`函数，可以获取一个对象的类型信息，
+```python
+class People(object):
+    eye = True
+
+    def work(self):
+        print('people work.')
+
+
+def f():
+    pass
+
+
+if __name__ == '__main__':
+    people = People()
+    print(type(people))
+    print(type(people.work))
+    print(type(max))
+```
+结果
+```
+<class '__main__.People'>
+<class 'method'>
+<class 'builtin_function_or_method'>
+```
+想判断一个对象是否是函数，可以用`types`模块中定义的常量。
+
+如果想获得对象的所有属性和方法，可以使用`dir`函数。
+```
+import types
+print(types.FunctionType == type(max))
+print(types.BuiltinFunctionType == type(max))
+print(types.FunctionType == type(f))
+```
+结果
+```
+False
+True
+True
+```
