@@ -1,5 +1,4 @@
 import exifread
-import re
 
 def  imageread():
         GPS = {}
@@ -9,7 +8,7 @@ def  imageread():
         print(imagetext)
         for key in imagetext:                           #打印键值对
                 print(key,":",imagetext[key])
-        print('********************************************************\n********************************************************')
+        print('********************************************************')
         for q in imagetext:                             #打印该图片的经纬度 以及拍摄的时间
                 if q == "GPS GPSLongitude":
                         print("GPS经度 =", imagetext[q],imagetext['GPS GPSLatitudeRef'])
