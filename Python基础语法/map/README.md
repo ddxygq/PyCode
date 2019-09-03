@@ -1,4 +1,5 @@
-可交换图像文件格式（英语：`Exchangeable image file format`，官方简称`Exif`），是专门为数码相机的照片设定的，可以记录数码照片的属性信息和拍摄数据，比如拍摄的设备、拍摄的参数以及地理位置等。
+# Python exifread读取图片的时间、地点
+`Exit`可交换图像文件格式（英语：`Exchangeable image file format`，官方简称`Exif`），是专门为数码相机的照片设定的，可以记录数码照片的属性信息和拍摄数据，比如拍摄的设备、拍摄的参数以及地理位置等。
 ![](exif.jpg)
 一张`Exit`图片结构主要分为：
 - `0th IFD`：主要的图片数据
@@ -95,6 +96,7 @@ import exifread
 def  imageread():
         GPS = {}
         date = ''
+        # 图片媒体是二进制文件，文件打开格式为rb
         f = open("0.jpg",'rb')
         imagetext = exifread.process_file(f)
         print(imagetext)
@@ -201,3 +203,7 @@ JPEGThumbnail : b'\xff\xd8\xff\xe0\x00\x10JFIF\x00\x01\x01\x00\x00\x01\x00\x01\x
 GPS纬度 = [31, 12, 5179367/125000] E
 GPS经度 = [121, 35, 21029663/500000] N
 ```
+
+通过调用`exifread.process_file`函数，即可很轻松的得到照片拍摄的经纬度和拍摄时间，得到经纬度，可以通过调用比如高德地图api得到实际的地点。
+
+[代码](https://github.com/ddxygq/PyCode/blob/master/Python%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/map/main.py)
