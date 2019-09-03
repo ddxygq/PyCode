@@ -151,7 +151,7 @@ if __name__ == '__main__':
     # 图片路径，需要[原图]
     image_path = '0.jpg'
     # api_key
-    api_key = "77961dd3ff0cf8789169033f7f721460"
+    api_key = "你的高德地图api_key"
     location = Location(image_path, api_key)
 
     # 拍摄时间
