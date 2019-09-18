@@ -18,6 +18,7 @@ def getLogger(logfile, logname=None):
 	logger = logging.getLogger(logname)
 	# 这个如果不设置，日志中就没有INFO级别的日志
 	logger.setLevel(logging.INFO)
+
 	# 设置日志格式
 	formatter = Formatter('%(asctime)s %(levelname)s: %(module)s.%(funcName)s() %(message)s \
 		[in %(pathname)s:%(lineno)d]')
@@ -29,15 +30,14 @@ def getLogger(logfile, logname=None):
 	logger.addHandler(handler)
 
 	# 邮件日志
-	receivers = ['keguang@126.com'
+	receivers = ['hbzerkg@126.com'
 		]
-
 	subject = 'application error.'
-	mail_handler = SMTPHandler('smtp.163.com'
-							   , '***'
+	mail_handler = SMTPHandler('smtp.qq.com'
+							   , '123456@qq.com'
 							   , receivers
 							   , subject
-							   , ('***', '***'))
+							   , ('123456@qq.com', '******'))
 	mail_handler.setLevel(logging.ERROR)
 	mail_handler.setFormatter(formatter)
 	logger.addHandler(mail_handler)
