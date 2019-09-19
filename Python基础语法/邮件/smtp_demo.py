@@ -60,4 +60,4 @@ if __name__ == '__main__':
     _to = ['******@126.com', '******@qq.com']
     for to in _to:
         send_mail(username, password, to, sender_name, subject, content, email_type)
-        print('send mail to %s success' % (to))
+        print('send mail to %s success' % to)
