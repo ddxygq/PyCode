@@ -22,4 +22,5 @@
 增加 `SMTP` 认证的目的是为了使用户避免受到垃圾邮件的侵扰。
 
 网易`163`免费邮箱相关服务器信息：
-![](https://github.com/ddxygq/PyCode/raw/master/source/image/2.png)
+
+![](https://raw.githubusercontent.com/ddxygq/PyCode/master/source/image/2.png)
