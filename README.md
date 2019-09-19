@@ -2,6 +2,8 @@
 
 这里主要记录我平时使用的一些Python语法。
 
+![](source/image/python-basic-image.png)
+
 ## Python 代码
 - Python基础
 - 数学算法
