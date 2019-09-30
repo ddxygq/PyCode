@@ -2,6 +2,7 @@ from flask import abort, redirect, url_for,Flask,render_template
 
 app = Flask(__name__)
 
+
 @app.route('/')
 def index():
     return redirect(url_for('login'))
