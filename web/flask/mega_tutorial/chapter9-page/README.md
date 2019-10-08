@@ -1,5 +1,6 @@
 # 分页
-代码地址：https://github.com/ddxygq/PyCode/tree/master/web/flask/mega_tutorial/chapter9-page/app
+**代码地址**：https://github.com/ddxygq/PyCode/tree/master/web/flask/mega_tutorial/chapter9-page/app
+
 本文翻译自[The Flask Mega-Tutorial Part IX: Pagination](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-ix-pagination)
 
 这是Flask Mega-Tutorial系列的第九部分，我将告诉你如何对数据列表进行分页。
