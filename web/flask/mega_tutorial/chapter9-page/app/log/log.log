@@ -1,2 +1,3 @@
 2019-09-30 11:47:23,543 ERROR: demo.not_found_error() 404 error 		[in F:\我的文件\code\PyCode\web\flask\mega_tutorial\chapter7-errorhandle\app\demo.py:130]
 2019-10-08 10:09:59,545 ERROR: demo.not_found_error() 404 error 		[in F:\我的文件\code\PyCode\web\flask\mega_tutorial\chapter8-fans\app\demo.py:168]
+2019-10-08 19:59:03,757 ERROR: demo.not_found_error() 404 error 		[in F:\我的文件\code\PyCode\web\flask\mega_tutorial\chapter9-page\app\demo.py:217]
