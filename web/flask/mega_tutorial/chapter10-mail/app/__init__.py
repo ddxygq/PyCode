@@ -8,7 +8,8 @@ from flask_mail import Mail
 
 app = Flask(__name__)
 app.config.from_object(Config)
-app.secret_key = 'afjah3ur38thgh'
+# app.secret_key = 'afjah3ur38thgh'
+
 login = LoginManager(app)
 login.login_view = 'login'
 

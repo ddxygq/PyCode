@@ -32,7 +32,7 @@ def run():
 def show_user():
     users = User.query.all()
     for u in users:
-        print(u.id, u.username)
+        print(u.id, u.username, u.email, u.password_hash)
 
 
 if __name__ == '__main__':
