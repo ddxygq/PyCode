@@ -14,7 +14,7 @@ class Config(object):
     MAIL_PORT = 587
     MAIL_USE_TLS = True
     MAIL_USERNAME = '2601538122@qq.com'
-    MAIL_PASSWORD = 'safhyylfjqgaebab'
+    MAIL_PASSWORD = '*******'
     ADMINS = ['2601538122@qq.com']
 
     POSTS_PER_PAGE = 3
