@@ -3,7 +3,7 @@ from forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, ResetP
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from datetime import datetime
-from flask_babel import _, get_locale
+from flask_babel import _
 
 import sys
 
