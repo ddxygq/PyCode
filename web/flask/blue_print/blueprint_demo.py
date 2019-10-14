@@ -8,7 +8,7 @@ app.register_blueprint(simple_page)
 
 @app.route('/test')
 def test():
-    return redirect(url_for('simple_page.page'))
+    return redirect(url_for('simple_page.show'))
 
 
 if __name__ == '__main__':
