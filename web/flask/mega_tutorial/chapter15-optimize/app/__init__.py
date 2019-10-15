@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, current_app
 from app.config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
@@ -8,8 +8,6 @@ from flask_mail import Mail
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_babel import Babel, lazy_gettext as _l
-
-# app.secret_key = 'afjah3ur38thgh'
 
 login = LoginManager()
 login.login_view = 'login'
@@ -57,4 +55,4 @@ def create_app(config_class=Config):
 
 @babel.localeselector
 def get_locale():
-    return request.accept_languages.best_match(app.config['LANGUAGES'])
+    return request.accept_languages.best_match(current_app.config['LANGUAGES'])

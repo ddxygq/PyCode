@@ -1,6 +1,7 @@
 from flask import render_template, flash, redirect, url_for, request, current_app
 from flask_login import current_user, login_required
 from datetime import datetime
+from flask_babel import _
 
 import sys
 sys.path.append('../..')
@@ -20,12 +21,12 @@ def follow(username):
 
     if user == current_user:
         flash("you can't follow yourself.")
-        return redirect(url_for('user_home', username=username))
+        return redirect(url_for('main.user_home', username=username))
 
     current_user.follow(user)
     db.session.commit()
     flash('you are following {}.'.format(username))
-    return redirect(url_for('user_home', username=username))
+    return redirect(url_for('main.user_home', username=username))
 
 
 @bp.route('/unfollow/<username>')
@@ -42,11 +43,11 @@ def unfollow(username):
         return redirect(url_for('index'))
     if user == current_user:
         flash("you can't unfollow yourself.")
-        return redirect(url_for('user_home', username=username))
+        return redirect(url_for('main.user_home', username=username))
     current_user.unfollow(user)
     db.session.commit()
     flash('you are not following {}.'.format(username))
-    return redirect(url_for('user_home', username=username))
+    return redirect(url_for('main.user_home', username=username))
 
 
 @bp.route('/edit_profile', methods=['GET', 'POST'])
@@ -58,7 +59,7 @@ def edit_profile():
         current_user.about_me = form.about_me.data
         db.session.commit()
         flash('Your changes have been saved.')
-        return redirect(url_for('edit_profile'))
+        return redirect(url_for('main.edit_profile'))
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.about_me.data = current_user.about_me
@@ -73,10 +74,10 @@ def user_home(username):
     # posts = [{'author': user, 'body': post.body} for post in posts_]
     page = request.args.get('page', 1, type=int)
     posts = user.posts.order_by(Post.timestamp.desc()).paginate(
-        page, app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('user_home', username=user.username, page=posts.next_num) \
+        page, current_app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('main.user_home', username=user.username, page=posts.next_num) \
         if posts.has_next else None
-    prev_url = url_for('user_home', username=user.username, page=posts.prev_num) \
+    prev_url = url_for('main.user_home', username=user.username, page=posts.prev_num) \
         if posts.has_prev else None
     return render_template('user.html'
                            , current_user=current_user
@@ -92,10 +93,10 @@ def explore():
     flash(_('Your post is now live!'))
     page = request.args.get('page', 1, type=int)
     posts = current_user.followed_posts().paginate(
-        page, app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('index', page=posts.next_num) \
+        page, current_app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('main.index', page=posts.next_num) \
         if posts.has_next else None
-    prev_url = url_for('index', page=posts.prev_num) \
+    prev_url = url_for('main.index', page=posts.prev_num) \
         if posts.has_prev else None
     return render_template('index.html', posts=posts.items, next_url=next_url,
                            prev_url=prev_url)
@@ -105,23 +106,23 @@ def explore():
 @bp.route('/index', methods=['GET', 'POST'])
 def index():
     if current_user.is_anonymous:
-        return redirect(url_for('login'))
+        return redirect(url_for('auth.login'))
     form = PostForm()
     if form.validate_on_submit():
         post = Post(body=form.post.data, author=current_user)
         db.session.add(post)
         db.session.commit()
         flash('Your post is now live!')
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
     # posts = current_user.followed_posts().all()
 
     # 分页
     page = request.args.get('page', 1, type=int)
     posts = current_user.followed_posts().paginate(
         page, current_app.config['POSTS_PER_PAGE'], False)
-    next_url = url_for('index', page=posts.next_num) \
+    next_url = url_for('main.index', page=posts.next_num) \
         if posts.has_next else None
-    prev_url = url_for('index', page=posts.prev_num) \
+    prev_url = url_for('main.index', page=posts.prev_num) \
         if posts.has_prev else None
     return render_template('index.html'
                            , current_user=current_user
