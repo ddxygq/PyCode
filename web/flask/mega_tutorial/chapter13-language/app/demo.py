@@ -15,7 +15,7 @@ from app.emails import send_password_reset_email
 
 @app.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password(token):
-    if current_user.before_request:
+    if current_user.is_authenticated:
         return redirect(url_for('index'))
     user = User.verify_reset_password_token(token)
     if not user:
