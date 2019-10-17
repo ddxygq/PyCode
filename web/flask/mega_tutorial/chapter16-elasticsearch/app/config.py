@@ -20,3 +20,6 @@ class Config(object):
     POSTS_PER_PAGE = 3
 
     LANGUAGES = ['zh']
+
+    # ES url
+    ELASTICSEATCH_URL = os.environ.get('ELASTICSEATCH_URL') or 'http://qcloud-test-hadoop01:9200'

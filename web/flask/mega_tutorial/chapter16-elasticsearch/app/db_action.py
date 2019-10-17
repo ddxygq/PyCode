@@ -2,7 +2,7 @@ import sys
 
 sys.path.append('../')
 from app.models import User, Post
-from app import app, db
+from app import create_app, db
 
 
 def run():
@@ -30,9 +30,11 @@ def run():
 
 
 def show_user():
+    create_app()
     users = User.query.all()
     for u in users:
-        print(u.id, u.username, u.email, u.password_hash)
+        posts = Post.query.filter_by(user_id=u.id).all()
+        print(u.id, u.username, u.email, u.password_hash, posts)
 
 
 if __name__ == '__main__':

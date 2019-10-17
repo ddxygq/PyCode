@@ -4,10 +4,11 @@ import unittest
 import sys
 sys.path.append('../')
 from app.models import User, Post
-from app import app, db
+from app import db, create_app
+from app.search import add_to_index, remove_from_index, query_index
 
 
-class UserModelCase(unittest.TestCase):
+class UserModelCase():
     def setUp(self):
         app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite://'
         db.create_all()
@@ -88,6 +89,16 @@ class UserModelCase(unittest.TestCase):
         self.assertEqual(f2, [p2, p3])
         self.assertEqual(f3, [p3, p4])
         self.assertEqual(f4, [p4])
+
+
+class ESTest(unittest.TestCase):
+    def test(self):
+        create_app()
+        for post in Post.query.all():
+            # add_to_index('posts', post)
+            print(post.id, post.body)
+
+        print(query_index('posts', '今天', 1, 100))
 
 
 if __name__ == '__main__':

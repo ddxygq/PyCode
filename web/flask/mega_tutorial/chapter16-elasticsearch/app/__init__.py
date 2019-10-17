@@ -8,6 +8,7 @@ from flask_mail import Mail
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_babel import Babel, lazy_gettext as _l
+from elasticsearch import Elasticsearch
 
 login = LoginManager()
 login.login_view = 'login'
@@ -50,6 +51,11 @@ def create_app(config_class=Config):
     # 日志
     app.logger = logging_module.getLogger('log/log.log', 'mylog')
 
+    # ES
+    app.elasticsearch = Elasticsearch([app.config['ELASTICSEATCH_URL']]) \
+        if app.config['ELASTICSEATCH_URL'] else None
+
+    app.app_context().push()
     return app
 
 
