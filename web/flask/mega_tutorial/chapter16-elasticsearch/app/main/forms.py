@@ -18,6 +18,10 @@ class SearchForm(FlaskForm):
             kwargs['formdata'] = request.args
 
         if 'csrf_enabled' not in kwargs:
+            """
+            表单默认添加了CSRF保护，包含一个CSRF标记，该标记通过模板中的form.hidden_​​tag()构造添加到表单中。
+            为了使搜索表单运作，CSRF需要被禁用，所以我将csrf_enabled设置为False
+            """
             kwargs['csrf_enabled'] = False
 
         super(SearchForm, self).__init__(*args, **kwargs)

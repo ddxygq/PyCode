@@ -5,7 +5,6 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config(object):
     SECRET_KEY = 'afjah3ur38thgh'
-    # JSON_AS_ASCII = False
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or\
         'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -22,4 +21,4 @@ class Config(object):
     LANGUAGES = ['zh']
 
     # ES url
-    ELASTICSEATCH_URL = os.environ.get('ELASTICSEATCH_URL') or 'http://qcloud-test-hadoop01:9200'
+    ELASTICSEATCH_URL = os.environ.get('ELASTICSEATCH_URL') or 'http://localhost:9200'

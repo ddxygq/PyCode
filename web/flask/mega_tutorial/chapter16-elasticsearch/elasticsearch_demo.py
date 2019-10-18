@@ -2,7 +2,7 @@ from elasticsearch import Elasticsearch
 
 
 def get_conn():
-    return Elasticsearch('http://qcloud-test-hadoop01:9200')
+    return Elasticsearch('http://localhost:9200')
 
 
 def add():
@@ -16,7 +16,7 @@ def add():
 
 
 def select():
-    docs = get_conn().search(index='test', body={'query': {'match': {'text': 'second'}}})
+    docs = get_conn().search(index='post', body={'query': {'match': {'body': 'test 0'}}})
     for key, value in docs.items():
         print(key, value)
 

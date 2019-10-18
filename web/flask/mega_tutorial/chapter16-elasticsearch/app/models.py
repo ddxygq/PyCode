@@ -99,18 +99,37 @@ class User(UserMixin, db.Model):
 class SearchableMixin(object):
     @classmethod
     def search(cls, expression, page, per_page):
+        """
+        搜索  , 这里的`cls`表示调用者本身，相当于`self`
+        :param expression: 搜索框里面的内容
+        :param page: 页码
+        :param per_page: 页的尺寸
+        :return:
+        """
         ids, total = query_index(cls.__tablename__, expression, page, per_page)
         if total == 0:
             return cls.query.filter_by(id=0), 0
-        when = []
+        sorts = []
         for i in range(len(ids)):
-            when.append((ids[i], i))
+            sorts.append((ids[i], i))
+
+        # 从elasticsearch的查询结果的是按照分数排序
+        # 由于sqlalchemy过滤结果不是根据ids排序，需要case when保证post结果与ids顺序一致
         return cls.query.filter(cls.id.in_(ids)).order_by(
-            db.case(when, value=cls.id)
+            db.case(sorts, value=cls.id)
         ), total
+
+        return cls.query.filter(cls.id.in_(ids)), total
 
     @classmethod
     def before_commit(cls, session):
+        """
+        会话还没有提交，所以我可以查看并找出将要添加，修改和删除的对象，
+        如session.new，session.dirty和session.deleted。
+        这些对象在会话提交后不再可用，所以我需要在提交之前保存它们。
+        :param session:
+        :return:
+        """
         session._changes = {
             'add': [obj for obj in session.new if isinstance(obj, cls)],
             'update': [obj for obj in session.dirty if isinstance(obj, cls)],
@@ -119,6 +138,11 @@ class SearchableMixin(object):
 
     @classmethod
     def after_commit(cls, session):
+        """
+        一旦会话被提交，我将使用它们来更新Elasticsearch索引。
+        :param session:
+        :return:
+        """
         for obj in session._changes['add']:
             add_to_index(cls.__tablename__, obj)
         for obj in session._changes['update']:

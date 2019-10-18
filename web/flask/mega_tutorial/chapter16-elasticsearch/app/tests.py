@@ -95,10 +95,11 @@ class ESTest(unittest.TestCase):
     def test(self):
         create_app()
         for post in Post.query.all():
-            # add_to_index('posts', post)
+            add_to_index('post', post)
             print(post.id, post.body)
+            # remove_from_index('posts', post)
 
-        print(query_index('posts', '今天', 1, 100))
+        print(query_index('post', '今天', 1, 100))
 
 
 if __name__ == '__main__':
