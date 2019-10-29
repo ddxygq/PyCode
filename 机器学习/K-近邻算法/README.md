@@ -9,11 +9,16 @@ KNN 的原理也很简单，通过选取样本集中 K 个离测试对象最近�
 
 # 二、距离计算
 计算距离通常可以使用距离平方和
-![](source/image/0.jpg)
+
+![](source/image/0.png)
+
 或者欧几里得距离
-![](source/image/1.jpg)
+
+![](source/image/1.png)
+
 曼哈顿距离计算公式
-![](source/image/2.jpg)
+
+![](source/image/2.png)
 这里使用欧几里得距离。
 
 # 三、K-近邻算法特点
@@ -90,5 +95,7 @@ if __name__ == '__main__':
 结果 -> [('A', 2), ('B', 1)] A
 ```
 代码中约定：蓝色：A类，红色：B类，绿色：待分类对象。
-![]()
+
+![](source/image/3.jpg)
+
 `('A', 2), ('B', 1)`，待预测对象属于A类。
