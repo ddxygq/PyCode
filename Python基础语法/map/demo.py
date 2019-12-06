@@ -3,7 +3,7 @@ import exifread
 def  imageread():
         GPS = {}
         date = ''
-        f = open("0.jpg",'rb')
+        f = open("tanyuan.jpg",'rb')
         imagetext = exifread.process_file(f)
         print(imagetext)
         for key in imagetext:                           #打印键值对
