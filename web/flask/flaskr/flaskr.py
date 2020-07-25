@@ -3,7 +3,7 @@ import sqlite3
 from flask import Flask, request, session, g, redirect, url_for, abort, \
      render_template, flash
 
-app = Flask(__name__, instance_path='D:/我的文件/Codes/PyCode/web/flask/flaskr')
+app = Flask(__name__, instance_path=os.path.abspath(__file__))
 app.config['USERNAME'] = 'name'
 app.config['PASSWORD'] = 'password'
 app.secret_key = 'ajflafoo8qm.mgaj'
