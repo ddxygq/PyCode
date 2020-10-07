@@ -3,7 +3,7 @@ import turtle
 
 def draw_square(turtle):
     for i in range(4):
-        turtle.forward(100)
+        turtle.forward(200)
         turtle.right(90)
 
 
@@ -12,10 +12,12 @@ def draw_flower(turtle):
         draw_square(turtle)
         turtle.right(10)
 
+    turtle.forward(500)
+
 
 def draw_pic():
     window = turtle.Screen()
-    window.bgcolor('red')
+    window.bgcolor('#00BFFF')
     brad = turtle.Turtle()
     brad.shape('turtle')
     brad.color('white')
