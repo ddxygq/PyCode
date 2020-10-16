@@ -6,3 +6,4 @@ tensorflow/MNIST_data
 tensorflow/__pycache__
 .idea
 *.db
+*.log

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import math
+import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -45,5 +45,24 @@ def helperView():
 	plt.show()
 
 
+def plot():
+	path = "C:\\Users\\Administrator\\Desktop\\statistic_v2_mix_daily_new.xlsx"
+	data = pd.read_excel(path)
+	columns = data.keys()[1:-2]
+
+	for column in columns:
+		plt.plot(data['date'], data[column])
+		plt.xlabel("时间", fontsize=13, fontweight='bold')
+		plt.ylabel("数量", fontsize=13, fontweight='bold')
+		plt.title("hm2.%s 数据趋势" % '_'.join(column.split('_')[0:-2]))
+		# 解决中文显示问题
+		plt.rcParams['font.sans-serif'] = ['KaiTi']  # 指定默认字体
+		plt.rcParams['axes.unicode_minus'] = False  # 解决保存图像是负号'-'显示为方块的问题
+		plt.xticks()
+		plt.savefig('E:\\我的文件\\数据\\数据统计\\%s.png' % column)
+		plt.show()
+
+
 if __name__ == '__main__':
-	helperView()
+	plot()
+	# helperView()
