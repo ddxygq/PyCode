@@ -25,7 +25,7 @@ itsdangerous==1.1.0
 Jinja2==2.10.1
 Mako==1.1.0
 MarkupSafe==1.1.1
-Pillow==6.1.0
+Pillow==7.1.0
 PyJWT==1.7.1
 python-dateutil==2.8.0
 python-editor==1.0.4
