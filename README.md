@@ -2,7 +2,7 @@
 
 这里主要记录我平时使用的一些Python语法。
 
-![](source/image/python-basic-image.png)
+![](http://qiniu.cj318.cn/python-basic-image.png)
 
 ## Python 代码
 - Python基础
