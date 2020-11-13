@@ -15,7 +15,6 @@ def parse_local_u(friend_link):
     :param friend_link:
     :return:
     """
-    print('=================================================')
     menu = friend_link.find('p', attrs={'class': 'title9'}).text
     links = friend_link.find_all('a')
     print(menu, links)
@@ -27,24 +26,23 @@ def parse_local_u(friend_link):
         if attres.keys().__contains__('title'):
             infos.append((link['title'], link['href']))
     for info in infos:
+        title = info[0]
         info_url = info[1]
+
+        # 保存一个地区的所有数据
+        u_infos = []
+        u_infos.append('## {}'.format(title))
+        u_infos.append('|校徽|学校名称|院校省份|院校性质|院校类型|学历层次|院校属性|')
+        u_infos.append('|------------| ------------ |------------|------------| ------------ |------------|------------|')
+
         while '/' in info_url:
             info_url_abs = parse.urljoin(url, info_url)
-            print(info_url_abs)
             info_soup = parse2bs(info_url_abs)
-            print('------------------------------------')
             u_table = info_soup.find_all('table', attrs={'id': 'table'})
             u_trs = u_table[0].find_all('tr')
 
             # 保存一个地区的一页数据
-            u_infos = []
-
-            # 表头
-            u_table_header = []
-            u_tr = u_trs[0]
-            for th in u_tr.find_all('th')[:-2]:
-                u_table_header.append(th.text)
-            u_infos.append(u_table_header)
+            # u_infos = []
 
             # 表格内容
             for u_tr in u_trs[1:]:
@@ -52,27 +50,23 @@ def parse_local_u(friend_link):
                 ulogo = parse.urljoin(url, u_tds[0].find('img')['src'])
 
                 # u_info保存每个学校的信息[logo，名称, 院校省份	院校性质	院校类型	学历层次	院校属性]
-                u_info = [ulogo]
+                u_info = ['', ulogo]
                 for u_td in u_tds[1:-2]:
-                    u_info.append(u_td.text)
+                    u_info.append(u_td.text.strip().replace('\n', ','))
 
                 # 学校简介
                 u_desc_link = parse.urljoin(url, u_tds[-2].find('a')['href'])
                 u_desc_bs = parse2bs(u_desc_link)
                 u_desc = u_desc_bs.find('div', attrs={'class': 'box-con'})
-                u_desc_p = u_desc.find_all('p')
-                u_info.append(u_desc_p)
-                print('*************************************************')
-                for u_desc_pp in u_desc_p:
-                    print(u_desc_pp.text)
-                u_infos.append(u_info)
-
-            for u_info in u_infos:
-                print(u_info)
+                # u_desc_p = u_desc.find_all('p')
+                # u_info.append(u_desc_p)
+                u_infos.append('|'.join(u_info))
 
             # 获取下一页地址
             nextPage = info_soup.find('ul', attrs={'id': 'pageUl'}).find_all('a')[-1]
             info_url = nextPage['href']
+
+        print('\n'.join(u_infos))
 
 
 def parse2bs(url_path):
@@ -144,5 +138,5 @@ def subject_extract(friend_link):
 if __name__ == '__main__':
     soup = parse2bs(url)
     friend_links = soup.find_all(name='div', attrs={'class': 'friend_links wrap1200'})
-    # parse_local_u(friend_links[1])
-    subject_extract(friend_links[2])
+    parse_local_u(friend_links[1])
+    # subject_extract(friend_links[2])
