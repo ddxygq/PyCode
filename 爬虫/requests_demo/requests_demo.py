@@ -50,7 +50,7 @@ def parse_local_u(friend_link):
                 ulogo = parse.urljoin(url, u_tds[0].find('img')['src'])
 
                 # u_info保存每个学校的信息[logo，名称, 院校省份	院校性质	院校类型	学历层次	院校属性]
-                u_info = ['', ulogo]
+                u_info = ['', '<img src="{}" width="50px">'.format(ulogo)]
                 for u_td in u_tds[1:-2]:
                     u_info.append(u_td.text.strip().replace('\n', ','))
 
