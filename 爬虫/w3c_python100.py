@@ -1,0 +1,1 @@
+config = commons.getConfig('config.test.ini', 'utf-8')

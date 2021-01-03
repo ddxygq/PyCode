@@ -7,3 +7,4 @@ tensorflow/__pycache__
 .idea
 *.db
 *.log
+test
