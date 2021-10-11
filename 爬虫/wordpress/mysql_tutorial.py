@@ -85,4 +85,3 @@ if __name__ == '__main__':
     for link in links[1:2]:
         get_content(link)
         break
-
