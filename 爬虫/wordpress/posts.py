@@ -1,10 +1,19 @@
 from wordpress_xmlrpc import Client, WordPressPost
 from wordpress_xmlrpc.methods import posts
 
-wp = Client('https://www.ikeguang.com/xmlrpc.php', 'keguang', '******')
+
+wp = Client('https://你的网站域名/xmlrpc.php', 'wordpress用户名', 'wordpress密码')
 
 
 def post_new_article(title, content, terms_names={}, comment_status='open'):
+    """
+    保存文章到wordpress
+    :param title: 标题
+    :param content: 内容
+    :param terms_names: 分类
+    :param comment_status: 是否开启评论
+    :return:
+    """
     post = WordPressPost()
     post.title = title
     post.content = content
