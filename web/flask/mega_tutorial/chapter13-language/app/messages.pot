@@ -1,0 +1,51 @@
+# Translations template for PROJECT.
+# Copyright (C) 2020 ORGANIZATION
+# This file is distributed under the same license as the PROJECT project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2020.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2020-07-29 23:52+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.8.0\n"
+
+#: __init__.py:18
+msgid "Please log in to access this page."
+msgstr ""
+
+#: demo.py:50
+msgid "Your post is now live!"
+msgstr ""
+
+#: forms.py:13
+msgid "Username"
+msgstr ""
+
+#: forms.py:14
+msgid "Password"
+msgstr ""
+
+#: forms.py:15
+msgid "Remember Me"
+msgstr ""
+
+#: forms.py:16
+msgid "Sign In"
+msgstr ""
+
+#: templates/404.html:4
+msgid "File Not Found"
+msgstr ""
+
+#: templates/404.html:5
+msgid "Back"
+msgstr ""
+
