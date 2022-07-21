@@ -4,11 +4,19 @@ from bs4.element import Tag
 from urllib import parse
 import posts
 import time
-import urllib3
+import sys
+
+
+sys.path.append('../util')
+import oss
+
+
+"""
+https://www.ikeguang.com/
+"""
 
 
 domain = 'http://www.manongjc.com/'
-main_page = 'http://www.manongjc.com/mysql_basic/mysql-tutorial-basic.html'
 
 # 加上请求头
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) \
@@ -25,9 +33,10 @@ def parse2bs(url_path, verify=True):
     return BeautifulSoup(requests.get(url_path, headers=headers, verify=verify).content, features='html.parser')
 
 
-def get_urls():
+def get_urls(main_page):
     """
     获取所有要下载页面的url
+    :param main_page: 入口
     :return:
     """
     soup = parse2bs(main_page)
@@ -41,19 +50,12 @@ def get_urls():
     return links
 
 
-def get_content(url):
+def get_content(url, terms_names):
     """
     将详情页保存
     :param url:
     :return:
     """
-    terms_names = {
-        # 文章所属标签，没有则自动创建
-        'post_tag': ['mysql'],
-        # 文章所属分类，没有则自动创建
-        'category': ['mysql']
-    }
-
     if domain not in url:
         return
     print('*************************************************************************************')
@@ -69,19 +71,30 @@ def get_content(url):
         # 如果是图片，拼接地址，下载后上传到cdn，拼接上传后的地址。
         if isinstance(content_detail_img, Tag):
             image_src = parse.urljoin(domain, content_detail_img['src'])
-            content_detail = '<img src="' + image_src + '">'
+            # 上传到oss
+            image_oss = oss.put_image(image_src)
+            content_detail = '<img src="' + image_oss + '">'
+
         content_details.append(content_detail)
+
     title = main.find('h1').text
     content = ''.join([str(item).strip() for item in content_details])
 
     # 保存到wordpress
     posts.post_new_article(title, content, terms_names)
-    time.sleep(2)
+    time.sleep(1)
     print('%s finish ..' % url)
 
 
 if __name__ == '__main__':
-    links = get_urls()
-    for link in links[1:2]:
-        get_content(link)
-        break
+    main_page = 'http://www.manongjc.com/redis/redis_tutorial.html'
+    terms_names = {
+        # 文章所属标签，没有则自动创建
+        'post_tag': ['Redis'],
+        # 文章所属分类，没有则自动创建
+        'category': ['Redis教程']
+    }
+    links = get_urls(main_page)
+
+    for link in links:
+        get_content(link, terms_names)
