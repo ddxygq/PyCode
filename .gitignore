@@ -8,3 +8,4 @@ tensorflow/__pycache__
 *.db
 *.log
 test
+**/__pycache__
