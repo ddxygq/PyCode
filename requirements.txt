@@ -3,7 +3,7 @@ alembic==1.2.1
 amqp==2.6.0
 astor==0.8.1
 astunparse==1.6.3
-Babel==2.7.0
+Babel==2.9.1
 backcall==0.1.0
 beautifulsoup4==4.8.0
 billiard==3.6.3.0
