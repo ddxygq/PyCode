@@ -11,7 +11,7 @@ blinker==1.4
 bs4==0.0.1
 cachetools==4.1.1
 celery==4.4.6
-certifi==2019.6.16
+certifi==2022.12.7
 cffi==1.14.3
 chardet==3.0.4
 Click==7.0
